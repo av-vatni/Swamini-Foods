@@ -1,26 +1,118 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ==========================================================
+   Theme — Paithani silk & Diwali night
+   ========================================================== */
+@theme {
+  --color-paithani: #8c1450;
+  --color-paithani-light: #b8336f;
+  --color-plum: #4a0d2e;
+  --color-night: #2a0a1e;
+  --color-zari: #c9972b;
+  --color-zari-light: #f0d48a;
+  --color-marigold: #f4a61d;
+  --color-saffron: #e8781a;
+  --color-cream: #fcf6ec;
+  --color-cream-deep: #f6e7cc;
+  --color-paper: #fffdf8;
+  --color-ink: #33101f;
+  --color-ink-soft: #6f4a5a;
+  --color-line: #ead6b3;
+  --color-leaf: #2f6b2a;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --font-display: var(--font-tiro), "Tiro Devanagari Marathi", serif;
+  --font-sans: var(--font-mukta), "Mukta", system-ui, sans-serif;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --shadow-card: 0 1px 2px rgb(74 13 46 / .05), 0 8px 24px rgb(74 13 46 / .08);
+  --shadow-lift: 0 2px 6px rgb(74 13 46 / .08), 0 18px 40px rgb(74 13 46 / .14);
+
+  --animate-flicker: flicker 2.6s ease-in-out infinite;
+  --animate-spin-slow: spin 140s linear infinite;
+  --animate-sway: sway 7s ease-in-out infinite;
+  --animate-rise: rise .5s ease-out both;
+  --animate-pop: pop .28s ease-out;
+
+  @keyframes flicker {
+    0%, 100% { transform: scale(1) rotate(-1deg); opacity: 1; }
+    40% { transform: scale(.94, 1.06) rotate(2deg); opacity: .9; }
+    70% { transform: scale(1.03, .96) rotate(-2deg); }
+  }
+  @keyframes sway {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(.25deg) translateY(1px); }
+  }
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes pop {
+    from { opacity: 0; transform: translateY(16px) scale(.98); }
+    to { opacity: 1; transform: none; }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body {
+    @apply bg-cream text-ink font-sans antialiased;
+    /* faint rangoli dots */
+    background-image:
+      radial-gradient(circle, rgb(201 151 43 / .13) 1.4px, transparent 2px),
+      radial-gradient(circle, rgb(140 20 80 / .06) 1.4px, transparent 2px);
+    background-size: 28px 28px;
+    background-position: 0 0, 14px 14px;
+  }
+  ::selection { background: var(--color-zari-light); color: var(--color-plum); }
+  :focus-visible { outline: 3px solid var(--color-marigold); outline-offset: 2px; }
+}
+
+/* ---------- Decorative utilities ---------- */
+@layer components {
+  /* Marigold + mango-leaf toran */
+  .toran {
+    height: 46px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='46' viewBox='0 0 80 46'%3E%3Cpath d='M0 8 Q40 16 80 8' stroke='%23c9972b' stroke-width='1.2' fill='none'/%3E%3Cpath d='M40 14 C48 23 46 35 40 44 C34 35 32 23 40 14Z' fill='%232f6b2a'/%3E%3Cpath d='M40 16 L40 42' stroke='%23a7d07f' stroke-width='.9'/%3E%3Ccircle cx='10' cy='9' r='8' fill='%23f7b733'/%3E%3Ccircle cx='10' cy='9' r='4.8' fill='%23f39c12'/%3E%3Ccircle cx='10' cy='9' r='2' fill='%23d9730d'/%3E%3Ccircle cx='30' cy='11' r='8' fill='%23f39c12'/%3E%3Ccircle cx='30' cy='11' r='4.8' fill='%23e5820e'/%3E%3Ccircle cx='30' cy='11' r='2' fill='%23c2610a'/%3E%3Ccircle cx='50' cy='11' r='8' fill='%23f7b733'/%3E%3Ccircle cx='50' cy='11' r='4.8' fill='%23f39c12'/%3E%3Ccircle cx='50' cy='11' r='2' fill='%23d9730d'/%3E%3Ccircle cx='70' cy='9' r='8' fill='%23f39c12'/%3E%3Ccircle cx='70' cy='9' r='4.8' fill='%23e5820e'/%3E%3Ccircle cx='70' cy='9' r='2' fill='%23c2610a'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    background-position: center top;
+    transform-origin: top center;
+  }
+
+  /* Paithani-style zari border band */
+  .zari {
+    height: 12px;
+    background:
+      linear-gradient(45deg, transparent 38%, var(--color-zari-light) 38% 62%, transparent 62%) center / 12px 12px repeat-x,
+      linear-gradient(-45deg, transparent 38%, var(--color-zari-light) 38% 62%, transparent 62%) center / 12px 12px repeat-x,
+      linear-gradient(var(--color-zari), var(--color-zari));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .25), inset 0 -1px 0 rgb(0 0 0 / .15);
+  }
+
+  /* Small marigold dot divider under headings */
+  .marigold-rule {
+    width: 96px;
+    height: 10px;
+    margin-inline: auto;
+    background: radial-gradient(circle, var(--color-marigold) 3.5px, transparent 4px) center / 18px 10px repeat-x;
+  }
+
+  /* Category backdrops for product art */
+  .art-sweet   { --art-bg: linear-gradient(135deg, #fde3b0, #f6c376); --ic: #c37419; --ic-dark: #8f4f0c; }
+  .art-namkeen { --art-bg: linear-gradient(135deg, #fbe0c4, #efb184); --ic: #a8551b; --ic-dark: #6f330a; }
+  .art-flour   { --art-bg: linear-gradient(135deg, #f7eedc, #e6d0a6); --ic: #ae874f; --ic-dark: #7a5a2b; }
+  .art-bg {
+    background:
+      repeating-conic-gradient(from 0deg, rgb(255 255 255 / .22) 0 10deg, transparent 10deg 20deg),
+      var(--art-bg);
+  }
+}
+
+/* ---------- Dialog ---------- */
+dialog.quick-view::backdrop {
+  background: rgb(42 10 30 / .5);
+  backdrop-filter: blur(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto; }
 }
